@@ -1,0 +1,8 @@
+# Normalise text files on checkout.
+* text=auto
+
+# Windows batch files must keep CRLF line endings to run reliably in cmd.exe.
+app.cmd text eol=crlf
+
+# The executable entrypoint must keep its LF shebang line on POSIX.
+app text eol=lf

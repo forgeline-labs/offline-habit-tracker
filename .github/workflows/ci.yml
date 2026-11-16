@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    name: ${{ matrix.os }} / Python 3.12
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    env:
+      PYTHONUTF8: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Static check
+        run: python -m compileall -q app tests
+
+      - name: Test suite
+        run: python -m unittest discover -s tests -v
+
+      - name: POSIX launcher
+        if: runner.os == 'Linux'
+        run: ./app --version
+
+      - name: Windows launcher
+        if: runner.os == 'Windows'
+        shell: cmd
+        run: app.cmd --version

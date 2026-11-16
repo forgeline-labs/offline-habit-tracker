@@ -1,0 +1,15 @@
+[project]
+name = "offline-habit-tracker"
+version = "0.1.0"
+description = "Offline habit tracker with date-based check-ins, exact streaks and XP (CLI)."
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/forgeline-labs/offline-habit-tracker"
+
+# No runtime, test, lint or formatting dependencies beyond the Python 3.12
+# standard library, so there is nothing to pin.  The test suite uses
+# `unittest`, and the static check uses `python -m compileall`.
