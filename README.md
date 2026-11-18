@@ -34,32 +34,24 @@ so out-of-order and future check-ins are legal.
 
 ## Quickstart
 
-Copy-paste this from the repository root (POSIX shell):
+Requires Python 3.12; no installation. Run from the repository root in a
+POSIX shell. The new checked-in `fixtures/habits.json` is an empty state;
+copying it resets only the disposable `habits-example.json`. The last
+check-in names an unknown habit and exits 4.
 
 ```console
-$ ./app add habits.json walk
+$ cp fixtures/habits.json habits-example.json
+$ python app add habits-example.json walk
 {"id":"walk","created":true}
-$ ./app check habits.json walk --date 2026-01-01
+$ python app check habits-example.json walk --date 2026-01-01
 {"id":"walk","date":"2026-01-01","added":true}
-$ ./app check habits.json walk --date 2026-01-02
-{"id":"walk","date":"2026-01-02","added":true}
-$ ./app check habits.json walk --date 2026-01-03
-{"id":"walk","date":"2026-01-03","added":true}
-$ ./app stats habits.json --as-of 2026-01-03
-{"habits":[{"id":"walk","checks":3,"xp":30,"level":0,"streak":3}]}
-$ cat habits.json
-{"habits":[{"id":"walk","dates":["2026-01-01","2026-01-02","2026-01-03"]}]}
+$ python app stats habits-example.json --as-of 2026-01-01
+{"habits":[{"id":"walk","checks":1,"xp":10,"level":0,"streak":1}]}
+$ python app check habits-example.json read --date 2026-01-01
+error: habit not found: read
+$ echo $?
+4
 ```
-
-On Windows, use `app.cmd` instead of `./app` (or `python app`):
-
-```bat
-app.cmd add habits.json walk
-app.cmd stats habits.json --as-of 2026-01-03
-```
-
-`python app ...` works on both platforms without a shell-specific wrapper.
-`./app` is the same program through its `#!/usr/bin/env python3` shebang.
 
 ## CLI
 
